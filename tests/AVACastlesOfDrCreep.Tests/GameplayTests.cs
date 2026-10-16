@@ -33,6 +33,22 @@ public class GameplayTests
     // ───────────────────────────── castles ─────────────────────────────
 
     [Fact]
+    public void A_new_game_opens_on_the_spoken_welcome_and_the_music_waits_for_it()
+    {
+        var g = new GameEngine(HighScoreTable.Load(TempFolder()));
+        var heard = new List<Sfx>();
+        g.Sound += heard.Add;
+        g.Tick(default);
+        heard.Clear();
+        g.Tick(default, default, start: true);
+        Assert.Equal(GameState.Playing, g.State);
+        Assert.Contains(Sfx.Welcome, heard);
+        Assert.DoesNotContain(Sfx.Music, heard);
+        for (int i = 0; i < (int)(GameEngine.WelcomeSeconds * 60) + 5; i++) g.Tick(default);
+        Assert.Contains(Sfx.Music, heard);
+    }
+
+    [Fact]
     public void A_castle_reads_its_rooms_things_trapdoors_and_walkways()
     {
         var text = TestRoom.Castle("0 s", Plain().Cells(15, 3, 5, 'T').Cells(15, 8, 10, '>').Cells(15, 12, 13, 'T').Thing('s', 20, 15, "spawn").Thing('t', 1, 15, "trapswitch", 2));

@@ -51,8 +51,18 @@ public sealed partial class GameEngine
         }
         SetPhase(Phase.Start);
         Say(Castle.Name.ToUpperInvariant(), "FIND THE WAY OUT", StartSeconds + 0.3);
-        Play(Sfx.LevelStart);
-        Music(true);
+        if (_greet)
+        {
+            // The first castle of a game: the voice at the door, then the music.
+            _greet = false;
+            Play(Sfx.Welcome);
+            _musicAfter = WelcomeSeconds;
+        }
+        else
+        {
+            Play(Sfx.LevelStart);
+            Music(true);
+        }
     }
 
     /// <summary>A player set down at a thing in a room (a door, say), standing.</summary>

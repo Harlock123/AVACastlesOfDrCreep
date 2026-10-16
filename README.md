@@ -41,7 +41,8 @@ traps on its monsters. Play alone, or with two players at once.
   kept and shown on the title screen. Escaping scores 1,000 times the castle's number, plus a bonus for
   every second under the castle's target time.
 - **The welcome:** *"Welcome, visitor... Come in... You will never leave!"*, spoken over a faint organ with a
-  stone hall's echo, then the title music. The voice is made by `tools/make_sounds.py` with espeak-ng.
+  stone hall's echo, on the title screen and again at the door of each new game, before the music. The voice
+  is made by `tools/make_sounds.py` with espeak-ng.
 - **The attract mode** walks the Tutorial castle by its way out.
 - **Every castle is proved escapable.** Each castle file ends with its way out, step by step. The tests
   walk every castle by it, from the door in to the way out, without losing a life.

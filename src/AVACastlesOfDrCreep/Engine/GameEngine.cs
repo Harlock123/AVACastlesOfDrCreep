@@ -39,6 +39,9 @@ public sealed partial class GameEngine
     /// <summary>How long the spoken welcome lasts before the title music starts.</summary>
     public const double WelcomeSeconds = 4.5;
     private bool _music;
+    /// <summary>A new game opens on the spoken welcome; the castle music waits until it's said.</summary>
+    private bool _greet;
+    private double _musicAfter;
 
     /// <summary>A game of the castles given as text (the game's own, unless a test brings its own).</summary>
     public GameEngine(HighScoreTable? table = null, IReadOnlyList<string>? castles = null)
@@ -130,6 +133,7 @@ public sealed partial class GameEngine
                 if (State == GameState.Attract && StateTime > AttractSeconds) ShowHighScores(-1);
                 break;
             case GameState.Playing:
+                if (_musicAfter > 0 && (_musicAfter -= dt) <= 0) Music(true);
                 Simulate(dt, one, two);
                 break;
             case GameState.GameOver:
@@ -168,7 +172,7 @@ public sealed partial class GameEngine
         StateTime = 0;
         NewEntryIndex = -1;
         ShowMap = false;
-        Play(Sfx.StartTune);
+        _greet = true;
         Enter(castle);
     }
 
@@ -233,6 +237,7 @@ public sealed partial class GameEngine
 
     private void Music(bool on)
     {
+        _musicAfter = 0;
         if (on == _music) return;
         _music = on;
         Play(on ? Sfx.Music : Sfx.MusicStop);
