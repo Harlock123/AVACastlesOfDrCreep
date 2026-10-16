@@ -2,19 +2,17 @@
 """Synthesises AVACastlesOfDrCreep's sound effects and tunes into ../src/AVACastlesOfDrCreep/Sounds as 16-bit mono WAV.
 
 Nothing is sampled from any game: every effect is built here from square, triangle and noise voices, and the
-tunes are new compositions. The spoken welcome is made with espeak-ng (if it's installed) and then given a castle's
-echo here; without espeak-ng the welcome is left as it is (or, the first time, an organ chord stands in). Run it
-from anywhere:
+tunes are new compositions. The spoken welcome comes from the formant voice in speech.py, the way 8-bit machines
+talked, so no recording or speech engine is needed. Run it from anywhere:
     python3 tools/make_sounds.py
 """
 import math
 import os
 import random
-import shutil
 import struct
-import subprocess
-import tempfile
 import wave
+
+from speech import say
 
 RATE = 22050
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "AVACastlesOfDrCreep", "Sounds")
@@ -141,31 +139,13 @@ def drums(bpm, bars):
 
 
 
-WELCOME = "Welcome, visitor...... Come in...... You will never leave!"
-
-
-def read_wav(path):
-    """A WAV file's samples as floats at RATE (16-bit mono, resampled simply if it's at another rate)."""
-    with wave.open(path, "rb") as w:
-        rate, n, width, chans = w.getframerate(), w.getnframes(), w.getsampwidth(), w.getnchannels()
-        raw = w.readframes(n)
-    assert width == 2
-    vals = struct.unpack("<%dh" % (len(raw) // 2), raw)[::chans]
-    vals = [v / 32768 for v in vals]
-    if rate == RATE:
-        return vals
-    step = rate / RATE
-    return [vals[min(len(vals) - 1, int(i * step))] for i in range(int(len(vals) / step))]
-
-
 def spoken():
-    """The welcome, spoken slow and deep by espeak-ng, with a stone hall's echo and a faint organ under it; or None."""
-    if not shutil.which("espeak-ng"):
-        return None
-    with tempfile.TemporaryDirectory() as d:
-        path = os.path.join(d, "say.wav")
-        subprocess.run(["espeak-ng", "-v", "en+m3", "-s", "105", "-p", "18", "-a", "180", "-g", "6", "-w", path, WELCOME], check=True)
-        dry = read_wav(path)
+    """The welcome, spoken slow and deep by our own formant voice, a ghost an octave under it, a stone hall's echo
+    and a faint organ."""
+    words = "W EH1 L K AH M , V IH1 Z IH T ER ... K AH1 M IH1 N ... Y UW1 W IH L N EH1 V ER L IY1 V !"
+    voice = say(words, rate=RATE, pitch=82, speed=0.8, size=1.08)
+    under = say(words, rate=RATE, pitch=41, speed=0.8, size=1.12, seed=8)
+    dry = [a + 0.22 * b for a, b in zip(voice, under)]
     # The castle's echo: a few delayed, quieter copies.
     out = dry + [0.0] * int(RATE * 1.2)
     for delay, gain in [(0.09, 0.45), (0.21, 0.3), (0.37, 0.2), (0.6, 0.12)]:
@@ -179,7 +159,7 @@ def spoken():
 def main():
     os.makedirs(OUT, exist_ok=True)
     for f in os.listdir(OUT):
-        if f.endswith(".wav") and f != "Welcome.wav":
+        if f.endswith(".wav"):
             os.remove(os.path.join(OUT, f))
     # Doors: a heavy creak and a thud. A bell: a bright ring. A key: a jingle. A lock: a clunk.
     write("Door.wav", cat(tone(0.35, 180, 260, "saw", vibrato=0.06, vib_rate=30, release=0.6, gain=0.5), mix(tone(0.15, 90, 50, "sine", release=1.2), tone(0.1, 400, 120, "noise", release=1.5, gain=0.4))), 0.36)
@@ -217,14 +197,8 @@ def main():
     write("StartTune.wav", tune(120, [("A4", 0.5), ("D5", 0.5), ("F5", 0.5), ("A5", 1), ("G#5", 0.5), ("A5", 1)], [("D3", 1), ("A2", 1), ("D3", 2)], kind="tri"), 0.42)
     write("GameOver.wav", tune(60, [("A4", 1), ("F4", 1), ("E4", 1), ("C#4", 1), ("D4", 4)], [("D3", 2), ("Bb2", 2), ("A2", 2), ("D2", 2)], kind="tri"), 0.42)
 
-    # The welcome.
-    said = spoken()
-    if said is not None:
-        write("Welcome.wav", said, 0.8)
-        print("welcome spoken by espeak-ng")
-    elif not os.path.exists(os.path.join(OUT, "Welcome.wav")):
-        write("Welcome.wav", mix(*[tone(3.5, hz(n), kind="tri", attack=0.4, release=0.5, vibrato=0.006, vib_rate=5) for n in ["D3", "F3", "A3", "D4"]]), 0.4)
-        print("espeak-ng isn't installed: an organ chord stands in for the welcome")
+    # The welcome, in a voice made here: no recording and no speech engine.
+    write("Welcome.wav", spoken(), 0.8)
 
 
 if __name__ == "__main__":

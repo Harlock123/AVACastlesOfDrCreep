@@ -42,7 +42,8 @@ traps on its monsters. Play alone, or with two players at once.
   every second under the castle's target time.
 - **The welcome:** *"Welcome, visitor... Come in... You will never leave!"*, spoken over a faint organ with a
   stone hall's echo, on the title screen and again at the door of each new game, before the music. The voice
-  is made by `tools/make_sounds.py` with espeak-ng.
+  is synthesised from scratch the way the 8-bit machines talked: a buzz and a hiss shaped by formant filters
+  (`tools/speech.py`), with the words written out as phonemes. No recording and no speech engine is involved.
 - **The attract mode** walks the Tutorial castle by its way out.
 - **Every castle is proved escapable.** Each castle file ends with its way out, step by step. The tests
   walk every castle by it, from the door in to the way out, without losing a life.
@@ -164,9 +165,8 @@ dotnet run --project src/AVACastlesOfDrCreep
 ```
 
 Needs the .NET 10 SDK. The sounds are made by `tools/make_sounds.py` (standard-library Python):
-`python3 tools/make_sounds.py` rewrites `src/AVACastlesOfDrCreep/Sounds`. The spoken welcome needs
-[espeak-ng](https://github.com/espeak-ng/espeak-ng) to remake (`sudo pacman -S espeak-ng`,
-`sudo apt install espeak-ng`). Without it, the welcome already in the folder is left alone.
+`python3 tools/make_sounds.py` rewrites `src/AVACastlesOfDrCreep/Sounds`, the spoken welcome included; it needs
+nothing but Python.
 
 ## Project structure
 
@@ -188,7 +188,7 @@ AVACastlesOfDrCreep/
 │   ├── Views/                   # The drawing: rooms, machines, monsters, players, the map, the screens
 │   └── Sounds/                  # The synthesised effects, tunes and the spoken welcome
 ├── tests/AVACastlesOfDrCreep.Tests/  # Castle, gameplay and screenshot tests
-├── tools/make_castles.py, tools/make_sounds.py
+├── tools/make_castles.py, tools/make_sounds.py, tools/speech.py
 └── Images/                      # Screenshots
 ```
 

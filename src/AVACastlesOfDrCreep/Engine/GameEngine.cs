@@ -37,7 +37,7 @@ public sealed partial class GameEngine
     private bool _startPrev, _start2Prev, _upPrev, _downPrev;
     private bool _welcomePending = true, _tunePending = true;
     /// <summary>How long the spoken welcome lasts before the title music starts.</summary>
-    public const double WelcomeSeconds = 4.5;
+    public const double WelcomeSeconds = 6.5;
     private bool _music;
     /// <summary>A new game opens on the spoken welcome; the castle music waits until it's said.</summary>
     private bool _greet;
