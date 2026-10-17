@@ -261,12 +261,95 @@ def blackspire():
     ])
 
 
+# ─────────────────────────────── Thornhallow ───────────────────────────────
+
+def thornhallow():
+    r0 = Room(0, "The Thorn Gate", 0, 0)
+    r0.floor(15, 0, 23).floor(10, 8, 23).ladder(10, 10, 15)
+    r0.thing("s", 2, 15, "spawn").thing("w", 4, 15, "boltswitch", "z").thing("z", 7, 15, "bolt", 3)
+    r0.thing("b", 14, 10, "bell", "a").thing("a", 20, 10, "door", 1, "a")
+
+    r1 = Room(1, "The Bone Bridge", 4, 0)
+    r1.floor(15, 0, 23).trap(15, 9, 12)
+    r1.thing("a", 2, 15, "door", 0, "a").thing("t", 4, 15, "trapswitch", 1).thing("n", 6, 15, "ankh", "u").thing("u", 20, 15, "tomb")
+    r1.thing("d", 22, 15, "door", 2, "a", "open")
+
+    r2 = Room(2, "The Weeping Stair", 8, 0, 3, 3)
+    r2.floor(15, 0, 23).floor(10, 3, 23).floor(5, 10, 23).ladder(6, 10, 15).ladder(18, 5, 10)
+    r2.thing("a", 2, 15, "door", 1, "d").thing("w", 9, 10, "boltswitch", "z").thing("z", 15, 10, "bolt", 3, "off").thing("c", 21, 10, "coffin", "left")
+    r2.thing("d", 21, 5, "door", 3, "a", "open")
+
+    r3 = Room(3, "The Vault of Wires", 12, 0)
+    r3.floor(15, 0, 23).floor(10, 0, 8).floor(10, 15, 23).floor(5, 8, 15).pole(14, 5, 15)
+    r3.thing("a", 1, 15, "door", 2, "d").thing("m", 4, 15, "booth").thing("g", 12, 15, "fieldbutton", "f")
+    r3.thing("q", 10, 5, "receiver", "m", "green").thing("k", 12, 5, "key", "gold")
+    r3.thing("p", 2, 10, "receiver", "m", "blue").thing("r", 16, 10, "receiver", "m", "red").thing("f", 19, 10, "field", 3).thing("d", 22, 10, "door", 4, "a", "open")
+
+    r4 = Room(4, "The Thorn Keep", 16, 0)
+    r4.floor(15, 0, 23).floor(10, 4, 20).trap(15, 11, 13).ladder(8, 10, 15).pole(18, 10, 15)
+    r4.thing("a", 2, 15, "door", 3, "d").thing("n", 6, 15, "ankh", "u").thing("u", 16, 15, "tomb")
+    r4.thing("l", 20, 15, "lock", "gold", "e").thing("e", 22, 15, "exit").thing("t", 12, 10, "trapswitch", 1)
+
+    return castle("Thornhallow", 150, (0, "s"), [r0, r1, r2, r3, r4], [
+        "walk 4", "fire", "walk 10", "up", "walk 14", "fire", "walk 20", "door",
+        "walk 6", "walk 4", "watch 10", "fire", "wait 1", "fire", "walk 22", "door",
+        "walk 6", "up", "walk 15", "walk 9", "watch 15", "fire", "wait 0.5", "fire", "walk 18", "up", "walk 21", "door",
+        "walk 4", "door", "walk 12", "walk 14", "down", "walk 12", "fire", "walk 4", "fire", "fire", "door", "walk 22", "door",
+        "walk 8", "up", "walk 12", "watch 12", "fire", "wait 1", "fire", "walk 18", "down", "walk 20", "fire", "walk 22", "door",
+    ])
+
+
+# ─────────────────────────────── Wyrmgate ───────────────────────────────
+
+def wyrmgate():
+    r0 = Room(0, "The Wyrm's Mouth", 8, 2, 3, 3)
+    r0.floor(15, 0, 23).floor(10, 0, 23).floor(5, 4, 19).ladder(12, 10, 15).ladder(6, 5, 10)
+    r0.thing("s", 3, 15, "spawn").thing("a", 21, 15, "door", 1, "a", "open").thing("b", 2, 10, "door", 4, "d")
+    r0.thing("l", 14, 5, "lock", "silver", "c").thing("c", 17, 5, "door", 5, "a")
+
+    r1 = Room(1, "The Spark Gallery", 12, 3)
+    r1.floor(15, 0, 23).floor(10, 0, 23).ladder(5, 10, 15).pole(17, 10, 15)
+    r1.thing("a", 1, 15, "door", 0, "a").thing("x", 3, 15, "raybox", "y").thing("y", 0, 10, "ray", 0, "right")
+    r1.thing("v", 15, 10, "boltswitch", "z").thing("z", 19, 15, "bolt", 3).thing("d", 23, 15, "door", 2, "a", "open")
+
+    r2 = Room(2, "The Grinding Floor", 16, 2, 3, 3)
+    r2.floor(15, 0, 23).walkway(15, 5, 20, "left").floor(10, 0, 23).trap(10, 13, 15).ladder(22, 10, 15)
+    r2.thing("a", 1, 15, "door", 1, "d").thing("w", 3, 15, "walkcontrol", 1)
+    r2.thing("d", 2, 10, "door", 3, "a", "open").thing("c", 6, 10, "coffin", "right").thing("t", 18, 10, "trapswitch", 1)
+
+    r3 = Room(3, "The Mummy's Gun", 12, 0)
+    r3.floor(10, 0, 12).floor(15, 0, 23).ladder(11, 10, 15)
+    r3.thing("a", 1, 10, "door", 2, "d").thing("n", 3, 10, "ankh", "u").thing("x", 5, 10, "raybox", "y")
+    r3.thing("k", 16, 15, "key", "silver").thing("u", 19, 15, "tomb").thing("d", 21, 15, "door", 4, "a", "open").thing("y", 23, 15, "ray", 4, "left")
+
+    r4 = Room(4, "The Bell Gallery", 4, 1)
+    r4.floor(15, 0, 23).floor(10, 0, 23).ladder(12, 10, 15)
+    r4.thing("u", 2, 15, "tomb").thing("b", 18, 15, "bell", "d").thing("n", 21, 15, "ankh", "u").thing("a", 22, 15, "door", 3, "d")
+    r4.thing("d", 2, 10, "door", 0, "b").thing("f", 8, 10, "field", 3).thing("g", 14, 10, "fieldbutton", "f")
+
+    r5 = Room(5, "The Wyrm's Heart", 8, 0)
+    r5.floor(15, 0, 23).floor(10, 15, 23).ladder(20, 10, 15)
+    r5.thing("c", 0, 15, "coffin", "right").thing("g", 4, 15, "fieldbutton", "f").thing("a", 8, 15, "door", 0, "c").thing("f", 14, 15, "field", 3)
+    r5.thing("e", 22, 10, "exit", "open")
+
+    return castle("Wyrmgate", 200, (0, "s"), [r0, r1, r2, r3, r4, r5], [
+        "walk 21", "door",
+        "walk 3", "aim y 0", "walk 5", "up", "walk 15", "fire", "walk 17", "down", "walk 23", "door",
+        "walk 3", "fire", "walk 22", "up", "walk 12", "walk 18", "watch 14", "fire", "wait 1", "fire", "walk 2", "door",
+        "walk 5", "aim y 14", "watch 9", "fire", "aim y 4", "walk 11", "down", "walk 16", "walk 21", "door",
+        "walk 18", "fire", "walk 12", "up", "walk 14", "fire", "walk 2", "door",
+        "walk 6", "up", "walk 14", "fire", "walk 17", "door",
+        "walk 4", "fire", "walk 20", "up", "walk 22", "door",
+    ])
+
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     for f in os.listdir(OUT):
         if f.endswith(".castle"):
             os.remove(os.path.join(OUT, f))
-    for i, (slug, make) in enumerate([("tutorial", tutorial), ("ravenmoor", ravenmoor), ("grimwald", grimwald), ("mortlake", mortlake), ("blackspire", blackspire)]):
+    for i, (slug, make) in enumerate([("tutorial", tutorial), ("ravenmoor", ravenmoor), ("grimwald", grimwald), ("thornhallow", thornhallow),
+                                     ("mortlake", mortlake), ("wyrmgate", wyrmgate), ("blackspire", blackspire)]):
         with open(os.path.join(OUT, f"{i}-{slug}.castle"), "w") as f:
             f.write(make())
     print("written", sorted(os.listdir(OUT)))

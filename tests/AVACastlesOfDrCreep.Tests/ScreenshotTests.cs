@@ -98,16 +98,25 @@ public sealed class ScreenshotTests
     public void The_transmitter_ledge() => Walk(2, "ledge", g => P(g).Room == 3 && P(g).Y < 6 && g.Monsters.Count == 1 && P(g).X > 22);
 
     [AvaloniaFact]
-    public void The_laboratory() => Walk(4, "laboratory", g => P(g).Room == 4 && P(g).X > 10.5 && P(g).X < 12 && P(g).Pose == Pose.Walking && P(g).Y > 14, seconds: 300);
+    public void The_laboratory() => Walk(6, "laboratory", g => P(g).Room == 4 && P(g).X > 10.5 && P(g).X < 12 && P(g).Pose == Pose.Walking && P(g).Y > 14, seconds: 300);
 
     [AvaloniaFact]
-    public void The_cellar() => Walk(4, "cellar", g => P(g).Room == 0 && g.Monsters.Any(m => m.Y < 11) && P(g).X > 18);
+    public void The_cellar() => Walk(6, "cellar", g => P(g).Room == 0 && g.Monsters.Any(m => m.Y < 11) && P(g).X > 18);
+
+    [AvaloniaFact]
+    public void The_vault_of_wires() => Walk(3, "vault", g => P(g).Room == 3 && P(g).Pose == Pose.Sliding && P(g).Y > 9);
+
+    [AvaloniaFact]
+    public void The_mummys_gun() => Walk(5, "mummys-gun", g => P(g).Room == 3 && g.Castle.Room(3).Things.Any(t => t.Kind == Kind.Ray && t.Beam > 0.15) && g.Effects.Any(e => e.Kind == EffectKind.Puff));
+
+    [AvaloniaFact]
+    public void The_wyrms_heart() => Walk(5, "wyrms-heart", g => P(g).Room == 5 && P(g).Pose == Pose.Climbing && P(g).Y < 12, seconds: 300);
 
     [AvaloniaFact]
     public void The_map()
     {
         var (w, c, g) = Open();
-        g.Go(3);
+        g.Go(4);
         g.Pilot.Reset(g.Castle);
         Assert.True(PlayUntil(g, c, g => P(g).Room == 3, 200));
         g.ShowMap = true;

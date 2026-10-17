@@ -10,9 +10,14 @@ traps on its monsters. Play alone, or with two players at once.
 
 ## Features
 
-- **Five castles**, chosen from the title screen: the **Tutorial**, **Ravenmoor**, **Grimwald**,
-  **Mortlake** and **Blackspire**. They range from five easy rooms to six hard ones. Start at any castle;
-  escaping one takes you into the next.
+- **Seven castles**, chosen from the title screen: the **Tutorial**, **Ravenmoor**, **Grimwald**,
+  **Thornhallow**, **Mortlake**, **Wyrmgate** and **Blackspire**. They range from five easy rooms to six hard
+  ones. Start at any castle; escaping one takes you into the next.
+  - **Thornhallow** drops a mummy through a trapdoor and lures the monster into lightning. It ends in a vault
+    with a three-way matter transmitter and a race against a force field.
+  - **Wyrmgate** is a loop that brings you back into its first hall by another door. On the way you park a
+    ray gun, stop a conveyor, and shoot a mummy on the floor below from a gun control on the floor above. At
+    the end you leave the monster shut behind a force field.
 - **Getting about:** walk the floors, climb ladders up and down, slide down poles. Go up at a door to go
   through it, and the matching door on the other side opens too. Walk off a ledge and you fall. More than a
   few squares is fatal.
@@ -69,6 +74,11 @@ traps on its monsters. Play alone, or with two players at once.
 |:-------:|:-----------:|:-------:|
 | ![The map](Images/AVACastlesOfDrCreep-map.png) | ![Two players](Images/AVACastlesOfDrCreep-two-players.png) | ![Escaped](Images/AVACastlesOfDrCreep-escaped.png) |
 | Mortlake so far. | Apart, side by side. | Out, against the clock. |
+
+| The Vault of Wires | The Mummy's Gun | The Wyrm's Heart |
+|:------------------:|:---------------:|:----------------:|
+| ![The Vault of Wires](Images/AVACastlesOfDrCreep-vault.png) | ![The Mummy's Gun](Images/AVACastlesOfDrCreep-mummys-gun.png) | ![The Wyrm's Heart](Images/AVACastlesOfDrCreep-wyrms-heart.png) |
+| Thornhallow: down the pole with the gold key. | Wyrmgate: shot from the floor above. | The field drops; the monster won't get past it. |
 
 The screenshots are made by the tests, which play the game in a real (headless) window; see
 [Tests](#tests).
@@ -131,7 +141,7 @@ The engine has no UI and runs in fixed 60 Hz steps, so it plays the same at any 
 
 - **The castles:** every one escaped by its written way out without a life lost, inside its target time,
   and with every monster it waits for actually coming; every door leading to a door that leads back; the
-  tutorial and four castles in order
+  tutorial and six castles in order
 - **Moving about:** walking, kept inside the room; ladders up and down and poles only down; short falls
   survived and long ones not
 - **The machines:** a shut door, its bell, and the door on the other side; locks and keys; trapdoors;

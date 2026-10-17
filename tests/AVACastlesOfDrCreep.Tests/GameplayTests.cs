@@ -65,10 +65,10 @@ public class GameplayTests
     }
 
     [Fact]
-    public void The_game_has_its_tutorial_and_four_castles_in_order()
+    public void The_game_has_its_tutorial_and_six_castles_in_order()
     {
         var g = new GameEngine(HighScoreTable.Load(TempFolder())) { Silent = true };
-        Assert.Equal(["Tutorial", "Ravenmoor", "Grimwald", "Mortlake", "Blackspire"], g.Castles.Select(c => c.Name));
+        Assert.Equal(["Tutorial", "Ravenmoor", "Grimwald", "Thornhallow", "Mortlake", "Wyrmgate", "Blackspire"], g.Castles.Select(c => c.Name));
         Assert.True(g.Castles.Zip(g.Castles.Skip(1)).All(p => p.Second.Par >= p.First.Par));
     }
 

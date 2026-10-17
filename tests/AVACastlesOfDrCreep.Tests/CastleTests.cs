@@ -26,6 +26,7 @@ public class CastleTests(ITestOutputHelper output)
         }
         Assert.True(g.Phase == Phase.Clear, $"{g.Castle.Name}: not out after {t / 60}s; stuck in room {p.Room} at ({p.X:0.0},{p.Y:0.0}) {p.Pose} doing \"{g.Pilot.Doing}\"");
         output.WriteLine($"{g.Castle.Name}: escaped in {g.Clock:0.0}s (par {g.Castle.Par})");
+        foreach (var m in g.Monsters) output.WriteLine($"  {m.Kind} in room {m.Room}: {(m.Dead ? "dead" : "still about")} at ({m.X:0.0},{m.Y:0.0})");
         Assert.False(g.Pilot.TimedOut, $"{g.Castle.Name}: a monster it watched for never came");
         Assert.True(g.Clock < g.Castle.Par, $"{g.Castle.Name}: {g.Clock:0.0}s is over par");
     }

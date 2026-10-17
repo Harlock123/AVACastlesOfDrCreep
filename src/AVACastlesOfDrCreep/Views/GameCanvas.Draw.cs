@@ -679,15 +679,15 @@ public sealed partial class GameCanvas
         for (int i = 0; i < g.Castles.Count; i++)
         {
             var c = g.Castles[i];
-            double y = 280 + i * 44;
+            double y = 276 + i * 38;
             bool on = i == g.Choice;
-            if (on) dc.FillRectangle(Brush(0x803A2A5A), new Rect(60, y - 18, 380, 36), 6);
+            if (on) dc.FillRectangle(Brush(0x803A2A5A), new Rect(60, y - 17, 380, 34), 6);
             Text(dc, (on ? "> " : "  ") + c.Name.ToUpperInvariant(), new Point(76, y), 30, on ? Yellow : White);
             string best = g.Best.Of(c.Name) is { } b ? $"{(int)b / 60}:{b % 60:00.0}" : "--:--";
             Text(dc, best, new Point(430, y), 26, on ? Yellow : Dim, right: true);
             Text(dc, $"{c.Rooms.Count} ROOMS", new Point(300, y), 18, Dim, right: true);
         }
-        double hy = 290 + g.Castles.Count * 44;
+        double hy = 286 + g.Castles.Count * 38;
         Text(dc, "UP/DOWN: CHOOSE", new Point(250, hy), 22, 0xFFB0A0D0, center: true);
         if ((int)(_clock * 2) % 2 == 0)
             Text(dc, "ENTER OR 1: ONE PLAYER    2: TWO PLAYERS", new Point(cx, 600), 36, Yellow, center: true);
